@@ -1,132 +1,103 @@
-#!/usr/bin/env node
-
 /**
- * Node.js CLI Calculator
+ * Calculator Module
  * 
- * Supports basic and advanced arithmetic operations:
- * - Addition (+)
- * - Subtraction (-)
- * - Multiplication (*)
- * - Division (/)
- * - Modulo (%)
- * - Exponentiation (** or ^)
- * - Square Root (sqrt)
- * 
- * Usage: node calculator.js <number1> <operator> <number2>
- * Example: node calculator.js 10 + 5
- * For square root: node calculator.js sqrt <number>
+ * Supports the following operations:
+ * - Addition
+ * - Subtraction
+ * - Multiplication
+ * - Division
+ * - Modulo
+ * - Exponentiation (Power)
+ * - Square Root
  */
 
-// Export functions for testing
+/**
+ * Add two numbers
+ * @param {number} a - First number
+ * @param {number} b - Second number
+ * @returns {number} Sum of a and b
+ */
 function add(a, b) {
-    return a + b;
+  return a + b;
 }
 
+/**
+ * Subtract second number from first
+ * @param {number} a - First number
+ * @param {number} b - Second number
+ * @returns {number} Difference of a and b
+ */
 function subtract(a, b) {
-    return a - b;
+  return a - b;
 }
 
+/**
+ * Multiply two numbers
+ * @param {number} a - First number
+ * @param {number} b - Second number
+ * @returns {number} Product of a and b
+ */
 function multiply(a, b) {
-    return a * b;
+  return a * b;
 }
 
+/**
+ * Divide first number by second
+ * @param {number} a - Numerator
+ * @param {number} b - Denominator
+ * @returns {number} Quotient of a and b
+ * @throws {Error} If b is zero
+ */
 function divide(a, b) {
-    if (b === 0) {
-        throw new Error('Division by zero is not allowed');
-    }
-    return a / b;
+  if (b === 0) {
+    throw new Error('Division by zero is not allowed');
+  }
+  return a / b;
 }
 
+/**
+ * Calculate modulo (remainder) of a divided by b
+ * @param {number} a - Dividend
+ * @param {number} b - Divisor
+ * @returns {number} Remainder of a divided by b
+ * @throws {Error} If b is zero
+ */
 function modulo(a, b) {
-    if (b === 0) {
-        throw new Error('Modulo by zero is not allowed');
-    }
-    return a % b;
+  if (b === 0) {
+    throw new Error('Modulo by zero is not allowed');
+  }
+  return a % b;
 }
 
+/**
+ * Calculate base raised to the exponent power
+ * @param {number} base - Base number
+ * @param {number} exponent - Exponent
+ * @returns {number} Base raised to the exponent power
+ */
 function power(base, exponent) {
-    return Math.pow(base, exponent);
+  return Math.pow(base, exponent);
 }
 
+/**
+ * Calculate square root of a number
+ * @param {number} n - Number to calculate square root of
+ * @returns {number} Square root of n
+ * @throws {Error} If n is negative
+ */
 function squareRoot(n) {
-    if (n < 0) {
-        throw new Error('Square root of negative number is not allowed');
-    }
-    return Math.sqrt(n);
+  if (n < 0) {
+    throw new Error('Cannot calculate square root of a negative number');
+  }
+  return Math.sqrt(n);
 }
 
-function calculate(num1, operator, num2) {
-    switch (operator) {
-        case '+':
-            return add(num1, num2);
-        case '-':
-            return subtract(num1, num2);
-        case '*':
-            return multiply(num1, num2);
-        case '/':
-            return divide(num1, num2);
-        case '%':
-            return modulo(num1, num2);
-        case '**':
-        case '^':
-            return power(num1, num2);
-        case 'sqrt':
-            return squareRoot(num1);
-        default:
-            throw new Error(`Unknown operator '${operator}'`);
-    }
-}
-
-// CLI execution (only run if called directly)
-if (require.main === module) {
-    // Get command line arguments
-    const args = process.argv.slice(2);
-
-    // Handle square root special case (unary operation)
-    if (args[0] === 'sqrt' && args.length === 2) {
-        const num = parseFloat(args[1]);
-        if (isNaN(num)) {
-            console.error('Error: Operand must be a valid number');
-            process.exit(1);
-        }
-        try {
-            const result = squareRoot(num);
-            console.log(`sqrt(${num}) = ${result}`);
-        } catch (error) {
-            console.error(`Error: ${error.message}`);
-            process.exit(1);
-        }
-        process.exit(0);
-    }
-
-    // Display usage if insufficient arguments
-    if (args.length !== 3) {
-        console.log('Usage: node calculator.js <number1> <operator> <number2>');
-        console.log('       node calculator.js sqrt <number>');
-        console.log('Example: node calculator.js 10 + 5');
-        console.log('Example: node calculator.js sqrt 16');
-        console.log('\nSupported operators: +, -, *, /, %, ** (or ^)');
-        console.log('Unary operation: sqrt');
-        process.exit(1);
-    }
-
-    const num1 = parseFloat(args[0]);
-    const operator = args[1];
-    const num2 = parseFloat(args[2]);
-
-    // Validate inputs
-    if (isNaN(num1) || isNaN(num2)) {
-        console.error('Error: Both operands must be valid numbers');
-        process.exit(1);
-    }
-
-    try {
-        const result = calculate(num1, operator, num2);
-        console.log(`${num1} ${operator} ${num2} = ${result}`);
-    } catch (error) {
-        console.error(`Error: ${error.message}`);
-        process.exit(1);
-    }
-}
-
-module.exports = { add, subtract, multiply, divide, modulo, power, squareRoot, calculate };
+module.exports = {
+  add,
+  subtract,
+  multiply,
+  divide,
+  modulo,
+  power,
+  squareRoot
+};
