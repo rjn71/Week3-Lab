@@ -92,6 +92,28 @@ function squareRoot(n) {
   return Math.sqrt(n);
 }
 
+/**
+ * Perform a calculation using an operator string
+ * @param {number} a - First number
+ * @param {string} operator - Operator: '+', '-', '*', '/', '%', '**', '^', 'sqrt'
+ * @param {number} b - Second number (ignored for 'sqrt')
+ * @returns {number} Result of the operation
+ * @throws {Error} If operator is unknown or arguments are invalid
+ */
+function calculate(a, operator, b) {
+  switch (operator) {
+    case '+': return add(a, b);
+    case '-': return subtract(a, b);
+    case '*': return multiply(a, b);
+    case '/': return divide(a, b);
+    case '%': return modulo(a, b);
+    case '**':
+    case '^': return power(a, b);
+    case 'sqrt': return squareRoot(a);
+    default: throw new Error(`Unknown operator '${operator}'`);
+  }
+}
+
 module.exports = {
   add,
   subtract,
@@ -99,5 +121,6 @@ module.exports = {
   divide,
   modulo,
   power,
-  squareRoot
+  squareRoot,
+  calculate
 };
